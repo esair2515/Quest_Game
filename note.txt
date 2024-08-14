@@ -1,0 +1,1001 @@
+ONE======================================================================================================================================================================================================
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/* Add this to the existing CSS */
+
+button.choice-button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+button.choice-button:hover {
+    background-color: #007bb5;
+}
+
+#story {
+    transition: opacity 0.5s ease;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+});
+
+function startStory() {
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    document.getElementById("story").textContent = storyText;
+
+    const choice1 = document.createElement("button");
+    choice1.textContent = "Investigate the light";
+    choice1.className = "choice-button";
+    choice1.onclick = function() { investigateLight(); };
+    
+    const choice2 = document.createElement("button");
+    choice2.textContent = "Stay where you are";
+    choice2.className = "choice-button";
+    choice2.onclick = function() { stayWhereYouAre(); };
+
+    const storyContainer = document.getElementById("story");
+    storyContainer.appendChild(document.createElement("br"));
+    storyContainer.appendChild(choice1);
+    storyContainer.appendChild(choice2);
+
+    document.getElementById("nextButton").style.display = "none";
+}
+
+function investigateLight() {
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    updateStory(storyText);
+}
+
+function stayWhereYouAre() {
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    updateStory(storyText);
+}
+
+function updateStory(newText) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Continue";
+        nextButton.className = "choice-button";
+        nextButton.onclick = function() { startStory(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(nextButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+TWO======================================================================================================================================================================================================
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+});
+
+function startStory() {
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    updateStory(storyText, [
+        { text: "Investigate the light", action: investigateLight },
+        { text: "Stay where you are", action: stayWhereYouAre }
+    ]);
+}
+
+function investigateLight() {
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    updateStory(storyText, [
+        { text: "Talk to the figure", action: talkToFigure },
+        { text: "Run away", action: runAway }
+    ]);
+}
+
+function stayWhereYouAre() {
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    updateStory(storyText, [
+        { text: "Wait and see", action: waitAndSee },
+        { text: "Shout for help", action: shoutForHelp }
+    ]);
+}
+
+function talkToFigure() {
+    const storyText = "The figure is friendly and offers you guidance out of the forest. You've found a friend!";
+    endGame(storyText, "You reached a peaceful ending.");
+}
+
+function runAway() {
+    const storyText = "You run as fast as you can, but you trip and fall. The darkness swallows you.";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function waitAndSee() {
+    const storyText = "You wait patiently. Eventually, the sun rises, revealing a path out of the forest.";
+    endGame(storyText, "You found your way out.");
+}
+
+function shoutForHelp() {
+    const storyText = "You shout as loud as you can, but no one hears you. You're lost in the forest.";
+    endGame(storyText, "You got lost and couldn't find your way out.");
+}
+
+function endGame(storyText, endingMessage) {
+    const storyContainer = document.getElementById("story");
+
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = `${storyText} ${endingMessage}`;
+
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart Game";
+        restartButton.className = "choice-button";
+        restartButton.onclick = function() { startStory(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(restartButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function updateStory(newText, choices) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+        choices.forEach(choice => {
+            const choiceButton = document.createElement("button");
+            choiceButton.textContent = choice.text;
+            choiceButton.className = "choice-button";
+            choiceButton.onclick = choice.action;
+            storyContainer.appendChild(document.createElement("br"));
+            storyContainer.appendChild(choiceButton);
+        });
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+THREE======================================================================================================================================================================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Story Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Story Game</h1>
+        <div id="story">
+            <!-- Story text will go here -->
+        </div>
+        <button id="nextButton">Start the Story</button>
+    </div>
+    <audio id="backgroundMusic" loop>
+        <source src="background-music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script src="script.js"></script>
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/* Add these styles to enhance the visual effects */
+
+body.dark-forest {
+    background-color: #2c3e50;
+}
+
+body.mysterious-figure {
+    background-color: #34495e;
+}
+
+body.sunrise {
+    background-color: #f39c12;
+}
+
+body.lost {
+    background-color: #7f8c8d;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+    playBackgroundMusic();
+});
+
+function startStory() {
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Investigate the light", action: investigateLight },
+        { text: "Stay where you are", action: stayWhereYouAre }
+    ]);
+}
+
+function investigateLight() {
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    document.body.className = "mysterious-figure";
+    updateStory(storyText, [
+        { text: "Talk to the figure", action: talkToFigure },
+        { text: "Run away", action: runAway }
+    ]);
+}
+
+function stayWhereYouAre() {
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Wait and see", action: waitAndSee },
+        { text: "Shout for help", action: shoutForHelp }
+    ]);
+}
+
+function talkToFigure() {
+    const storyText = "The figure is friendly and offers you guidance out of the forest. You've found a friend!";
+    document.body.className = "sunrise";
+    endGame(storyText, "You reached a peaceful ending.");
+}
+
+function runAway() {
+    const storyText = "You run as fast as you can, but you trip and fall. The darkness swallows you.";
+    document.body.className = "lost";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function waitAndSee() {
+    const storyText = "You wait patiently. Eventually, the sun rises, revealing a path out of the forest.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You found your way out.");
+}
+
+function shoutForHelp() {
+    const storyText = "You shout as loud as you can, but no one hears you. You're lost in the forest.";
+    document.body.className = "lost";
+    endGame(storyText, "You got lost and couldn't find your way out.");
+}
+
+function endGame(storyText, endingMessage) {
+    const storyContainer = document.getElementById("story");
+
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = `${storyText} ${endingMessage}`;
+
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart Game";
+        restartButton.className = "choice-button";
+        restartButton.onclick = function() { startStory(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(restartButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function updateStory(newText, choices) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+        choices.forEach(choice => {
+            const choiceButton = document.createElement("button");
+            choiceButton.textContent = choice.text;
+            choiceButton.className = "choice-button";
+            choiceButton.onclick = choice.action;
+            storyContainer.appendChild(document.createElement("br"));
+            storyContainer.appendChild(choiceButton);
+        });
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function playBackgroundMusic() {
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    backgroundMusic.play();
+}
+
+FOUR======================================================================================================================================================================================================
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+let inventory = [];
+
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+    playBackgroundMusic();
+});
+
+function startStory() {
+    inventory = []; // Reset inventory at the start of the game
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Investigate the light", action: investigateLight },
+        { text: "Stay where you are", action: stayWhereYouAre }
+    ]);
+}
+
+function investigateLight() {
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    document.body.className = "mysterious-figure";
+    updateStory(storyText, [
+        { text: "Talk to the figure", action: talkToFigure },
+        { text: "Run away", action: runAway }
+    ]);
+}
+
+function stayWhereYouAre() {
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Wait and see", action: waitAndSee },
+        { text: "Shout for help", action: shoutForHelp }
+    ]);
+}
+
+function talkToFigure() {
+    inventory.push("Lantern"); // Add lantern to inventory
+    const storyText = "The figure is friendly and offers you a lantern to help you navigate the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Thank the figure and continue", action: continueWithLantern }
+    ]);
+}
+
+function continueWithLantern() {
+    const storyText = "With the lantern lighting your way, you feel more confident as you continue through the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Move forward", action: encounterWolf }
+    ]);
+}
+
+function encounterWolf() {
+    const storyText = "You encounter a wolf blocking your path. It seems aggressive.";
+    document.body.className = "lost";
+    
+    if (inventory.includes("Lantern")) {
+        updateStory(storyText, [
+            { text: "Use the lantern to scare the wolf away", action: scareWolfWithLantern },
+            { text: "Run away", action: runAway }
+        ]);
+    } else {
+        updateStory(storyText, [
+            { text: "Try to scare the wolf", action: scareWolfWithoutLantern },
+            { text: "Run away", action: runAway }
+        ]);
+    }
+}
+
+function scareWolfWithLantern() {
+    const storyText = "You shine the lantern at the wolf, and it runs away. You've safely passed through the forest.";
+    endGame(storyText, "You reached a safe ending.");
+}
+
+function scareWolfWithoutLantern() {
+    const storyText = "You try to scare the wolf, but it doesn't back down. It attacks you, and you meet a tragic end.";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function runAway() {
+    const storyText = "You run as fast as you can, but you trip and fall. The darkness swallows you.";
+    document.body.className = "lost";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function waitAndSee() {
+    const storyText = "You wait patiently. Eventually, the sun rises, revealing a path out of the forest.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You found your way out.");
+}
+
+function shoutForHelp() {
+    const storyText = "You shout as loud as you can, but no one hears you. You're lost in the forest.";
+    document.body.className = "lost";
+    endGame(storyText, "You got lost and couldn't find your way out.");
+}
+
+function endGame(storyText, endingMessage) {
+    const storyContainer = document.getElementById("story");
+
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = `${storyText} ${endingMessage}`;
+
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart Game";
+        restartButton.className = "choice-button";
+        restartButton.onclick = function() { startStory(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(restartButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function updateStory(newText, choices) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+        choices.forEach(choice => {
+            const choiceButton = document.createElement("button");
+            choiceButton.textContent = choice.text;
+            choiceButton.className = "choice-button";
+            choiceButton.onclick = choice.action;
+            storyContainer.appendChild(document.createElement("br"));
+            storyContainer.appendChild(choiceButton);
+        });
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function playBackgroundMusic() {
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    backgroundMusic.play();
+}
+
+FIVE======================================================================================================================================================================================================
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+let inventory = [];
+let currentStoryPoint = "";
+
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+    playBackgroundMusic();
+});
+
+function startStory() {
+    inventory = []; // Reset inventory at the start of the game
+    currentStoryPoint = "start";
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Investigate the light", action: investigateLight },
+        { text: "Stay where you are", action: stayWhereYouAre }
+    ]);
+}
+
+function investigateLight() {
+    currentStoryPoint = "investigateLight";
+    inventory.push("Lantern"); // Add lantern to inventory
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    document.body.className = "mysterious-figure";
+    updateStory(storyText, [
+        { text: "Talk to the figure", action: talkToFigure },
+        { text: "Run away", action: runAway }
+    ]);
+}
+
+function talkToFigure() {
+    currentStoryPoint = "talkToFigure";
+    const storyText = "The figure is friendly and offers you guidance out of the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Continue", action: continueWithLantern }
+    ]);
+}
+
+function continueWithLantern() {
+    currentStoryPoint = "continueWithLantern";
+    const storyText = "With the lantern lighting your way, you feel more confident as you continue through the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Move forward", action: encounterWolf }
+    ]);
+}
+
+function encounterWolf() {
+    currentStoryPoint = "encounterWolf";
+    const storyText = "You encounter a wolf blocking your path. It seems aggressive.";
+    document.body.className = "lost";
+    
+    if (inventory.includes("Lantern")) {
+        updateStory(storyText, [
+            { text: "Use the lantern to scare the wolf away", action: scareWolfWithLantern },
+            { text: "Run away", action: runAway }
+        ]);
+    } else {
+        updateStory(storyText, [
+            { text: "Try to scare the wolf", action: scareWolfWithoutLantern },
+            { text: "Run away", action: runAway }
+        ]);
+    }
+}
+
+function scareWolfWithLantern() {
+    currentStoryPoint = "scareWolfWithLantern";
+    const storyText = "You shine the lantern at the wolf, and it runs away. You've safely passed through the forest.";
+    endGame(storyText, "You reached a safe ending.");
+}
+
+function scareWolfWithoutLantern() {
+    currentStoryPoint = "scareWolfWithoutLantern";
+    const storyText = "You try to scare the wolf, but it doesn't back down. It attacks you, and you meet a tragic end.";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function runAway() {
+    currentStoryPoint = "runAway";
+    const storyText = "You run as fast as you can, but you trip and fall. The darkness swallows you.";
+    document.body.className = "lost";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function stayWhereYouAre() {
+    currentStoryPoint = "stayWhereYouAre";
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Wait and see", action: waitAndSee },
+        { text: "Shout for help", action: shoutForHelp }
+    ]);
+}
+
+function waitAndSee() {
+    currentStoryPoint = "waitAndSee";
+    const storyText = "You wait patiently. Eventually, the sun rises, revealing a path out of the forest.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You found your way out.");
+}
+
+function shoutForHelp() {
+    currentStoryPoint = "shoutForHelp";
+    const storyText = "You shout as loud as you can, but no one hears you. You're lost in the forest.";
+    document.body.className = "lost";
+    endGame(storyText, "You got lost and couldn't find your way out.");
+}
+
+function endGame(storyText, endingMessage) {
+    const storyContainer = document.getElementById("story");
+
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = `${storyText} ${endingMessage}`;
+
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart Game";
+        restartButton.className = "choice-button";
+        restartButton.onclick = function() { startStory(); };
+
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save Progress";
+        saveButton.className = "choice-button";
+        saveButton.onclick = function() { saveGame(); };
+
+        const loadButton = document.createElement("button");
+        loadButton.textContent = "Load Progress";
+        loadButton.className = "choice-button";
+        loadButton.onclick = function() { loadGame(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(restartButton);
+        storyContainer.appendChild(saveButton);
+        storyContainer.appendChild(loadButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function updateStory(newText, choices) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+        choices.forEach(choice => {
+            const choiceButton = document.createElement("button");
+            choiceButton.textContent = choice.text;
+            choiceButton.className = "choice-button";
+            choiceButton.onclick = choice.action;
+            storyContainer.appendChild(document.createElement("br"));
+            storyContainer.appendChild(choiceButton);
+        });
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function saveGame() {
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+    localStorage.setItem("currentStoryPoint", currentStoryPoint);
+    alert("Game progress saved!");
+}
+
+function loadGame() {
+    const savedInventory = localStorage.getItem("inventory");
+    const savedStoryPoint = localStorage.getItem("currentStoryPoint");
+
+    if (savedInventory && savedStoryPoint) {
+        inventory = JSON.parse(savedInventory);
+        currentStoryPoint = savedStoryPoint;
+        loadStoryPoint();
+    } else {
+        alert("No saved progress found.");
+    }
+}
+
+function loadStoryPoint() {
+    switch (currentStoryPoint) {
+        case "investigateLight":
+            investigateLight();
+            break;
+        case "talkToFigure":
+            talkToFigure();
+            break;
+        case "continueWithLantern":
+            continueWithLantern();
+            break;
+        case "encounterWolf":
+            encounterWolf();
+            break;
+        case "scareWolfWithLantern":
+            scareWolfWithLantern();
+            break;
+        case "scareWolfWithoutLantern":
+            scareWolfWithoutLantern();
+            break;
+        case "runAway":
+            runAway();
+            break;
+        case "stayWhereYouAre":
+            stayWhereYouAre();
+            break;
+        case "waitAndSee":
+            waitAndSee();
+            break;
+        case "shoutForHelp":
+            shoutForHelp();
+            break;
+        default:
+            startStory();
+    }
+}
+
+function playBackgroundMusic() {
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    backgroundMusic.play();
+}
+
+SIX======================================================================================================================================================================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Story Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        #story {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .choice-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .choice-button:hover {
+            background-color: #0056b3;
+        }
+        .dark-forest {
+            background: url('dark-forest.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .mysterious-figure {
+            background: url('mysterious-figure.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .sunrise {
+            background: url('sunrise.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .lost {
+            background: url('lost.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        #backgroundMusic {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Story Game</h1>
+    <div id="story"></div>
+    <button id="nextButton" class="choice-button">Start Game</button>
+    <audio id="backgroundMusic" src="background-music.mp3" loop></audio>
+    <script src="script.js"></script>
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NA
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+let inventory = [];
+let currentStoryPoint = "";
+
+document.getElementById("nextButton").addEventListener("click", function() {
+    startStory();
+    playBackgroundMusic();
+});
+
+function playSoundEffect(effect) {
+    const audio = new Audio(`sounds/${effect}.mp3`);
+    audio.play();
+}
+
+function startStory() {
+    inventory = []; // Reset inventory at the start of the game
+    currentStoryPoint = "start";
+    const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Investigate the light", action: () => { playSoundEffect('investigate'); investigateLight(); }},
+        { text: "Stay where you are", action: () => { playSoundEffect('stay'); stayWhereYouAre(); }}
+    ]);
+}
+
+function investigateLight() {
+    currentStoryPoint = "investigateLight";
+    inventory.push("Lantern"); // Add lantern to inventory
+    const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
+    document.body.className = "mysterious-figure";
+    updateStory(storyText, [
+        { text: "Talk to the figure", action: () => { playSoundEffect('talk'); talkToFigure(); }},
+        { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
+    ]);
+}
+
+function talkToFigure() {
+    currentStoryPoint = "talkToFigure";
+    const storyText = "The figure is friendly and offers you guidance out of the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Continue", action: () => { playSoundEffect('continue'); continueWithLantern(); }}
+    ]);
+}
+
+function continueWithLantern() {
+    currentStoryPoint = "continueWithLantern";
+    const storyText = "With the lantern lighting your way, you feel more confident as you continue through the forest.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Move forward", action: () => { playSoundEffect('move'); encounterWolf(); }}
+    ]);
+}
+
+function encounterWolf() {
+    currentStoryPoint = "encounterWolf";
+    const storyText = "You encounter a wolf blocking your path. It seems aggressive.";
+    document.body.className = "lost";
+    
+    if (inventory.includes("Lantern")) {
+        updateStory(storyText, [
+            { text: "Use the lantern to scare the wolf away", action: () => { playSoundEffect('scare'); scareWolfWithLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
+        ]);
+    } else {
+        updateStory(storyText, [
+            { text: "Try to scare the wolf", action: () => { playSoundEffect('scare'); scareWolfWithoutLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
+        ]);
+    }
+}
+
+function scareWolfWithLantern() {
+    currentStoryPoint = "scareWolfWithLantern";
+    const storyText = "You shine the lantern at the wolf, and it runs away. You've safely passed through the forest.";
+    endGame(storyText, "You reached a safe ending.");
+}
+
+function scareWolfWithoutLantern() {
+    currentStoryPoint = "scareWolfWithoutLantern";
+    const storyText = "You try to scare the wolf, but it doesn't back down. It attacks you, and you meet a tragic end.";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function runAway() {
+    currentStoryPoint = "runAway";
+    const storyText = "You run as fast as you can, but you trip and fall. The darkness swallows you.";
+    document.body.className = "lost";
+    endGame(storyText, "You met an unfortunate end.");
+}
+
+function stayWhereYouAre() {
+    currentStoryPoint = "stayWhereYouAre";
+    const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Wait and see", action: () => { playSoundEffect('wait'); waitAndSee(); }},
+        { text: "Shout for help", action: () => { playSoundEffect('shout'); shoutForHelp(); }}
+    ]);
+}
+
+function waitAndSee() {
+    currentStoryPoint = "waitAndSee";
+    const storyText = "You wait patiently. Eventually, the sun rises, revealing a path out of the forest.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You found your way out.");
+}
+
+function shoutForHelp() {
+    currentStoryPoint = "shoutForHelp";
+    const storyText = "You shout as loud as you can, but no one hears you. You're lost in the forest.";
+    document.body.className = "lost";
+    endGame(storyText, "You got lost and couldn't find your way out.");
+}
+
+function endGame(storyText, endingMessage) {
+    const storyContainer = document.getElementById("story");
+
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = `${storyText} ${endingMessage}`;
+
+        const restartButton = document.createElement("button");
+        restartButton.textContent = "Restart Game";
+        restartButton.className = "choice-button";
+        restartButton.onclick = function() { startStory(); };
+
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save Progress";
+        saveButton.className = "choice-button";
+        saveButton.onclick = function() { saveGame(); };
+
+        const loadButton = document.createElement("button");
+        loadButton.textContent = "Load Progress";
+        loadButton.className = "choice-button";
+        loadButton.onclick = function() { loadGame(); };
+
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(restartButton);
+        storyContainer.appendChild(saveButton);
+        storyContainer.appendChild(loadButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function updateStory(newText, choices) {
+    const storyContainer = document.getElementById("story");
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
+        choices.forEach(choice => {
+            const choiceButton = document.createElement("button");
+            choiceButton.textContent = choice.text;
+            choiceButton.className = "choice-button";
+            choiceButton.onclick = choice.action;
+            storyContainer.appendChild(document.createElement("br"));
+            storyContainer.appendChild(choiceButton);
+        });
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
+}
+
+function saveGame() {
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+    localStorage.setItem("currentStoryPoint", currentStoryPoint);
+    alert("Game progress saved!");
+}
+
+function loadGame() {
+    const savedInventory = localStorage.getItem("inventory");
+    const savedStoryPoint = localStorage.getItem("currentStoryPoint");
+
+    if (savedInventory && savedStoryPoint) {
+        inventory = JSON.parse(savedInventory);
+        currentStoryPoint = savedStoryPoint;
+        loadStoryPoint();
+    } else {
+        alert("No saved progress found.");
+    }
+}
+
+function loadStoryPoint() {
+    switch (currentStoryPoint) {
+        case "investigateLight":
+            investigateLight();
+            break;
+        case "talkToFigure":
+            talkToFigure();
+            break;
+        case "continueWithLantern":
+            continueWithLantern();
+            break;
+        case "encounterWolf":
+            encounterWolf();
+            break;
+        case "scareWolfWithLantern":
+            scareWolfWithLantern();
+            break;
+        case "scareWolfWithoutLantern":
+            scareWolfWithoutLantern();
+            break;
+        case "runAway":
+            runAway();
+            break;
+        case "stayWhereYouAre":
+            stayWhereYouAre();
+            break;
+        case "waitAndSee":
+            waitAndSee();
+            break;
+        case "shoutForHelp":
+            shoutForHelp();
+            break;
+        default:
+            startStory();
+    }
+}
+
+function playBackgroundMusic() {
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    backgroundMusic.play();
+}
+
