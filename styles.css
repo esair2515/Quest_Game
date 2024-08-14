@@ -37,6 +37,25 @@ button {
     cursor: pointer;
     font-size: 1em;
 }
+button.choice-button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+button.choice-button:hover {
+    background-color: #007bb5;
+}
+
+#story {
+    transition: opacity 0.5s ease;
+}
 
 button:hover {
     background-color: #45a049;
