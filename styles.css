@@ -60,3 +60,18 @@ button.choice-button:hover {
 button:hover {
     background-color: #45a049;
 }
+body.dark-forest {
+    background-color: #2c3e50;
+}
+
+body.mysterious-figure {
+    background-color: #34495e;
+}
+
+body.sunrise {
+    background-color: #f39c12;
+}
+
+body.lost {
+    background-color: #7f8c8d;
+}
