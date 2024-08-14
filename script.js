@@ -8,10 +8,12 @@ function startStory() {
 
     const choice1 = document.createElement("button");
     choice1.textContent = "Investigate the light";
+    choice1.className = "choice-button";
     choice1.onclick = function() { investigateLight(); };
     
     const choice2 = document.createElement("button");
     choice2.textContent = "Stay where you are";
+    choice2.className = "choice-button";
     choice2.onclick = function() { stayWhereYouAre(); };
 
     const storyContainer = document.getElementById("story");
@@ -34,12 +36,21 @@ function stayWhereYouAre() {
 
 function updateStory(newText) {
     const storyContainer = document.getElementById("story");
-    storyContainer.textContent = newText;
+    
+    // Fade out
+    storyContainer.style.opacity = 0;
+    setTimeout(function() {
+        storyContainer.textContent = newText;
 
-    const nextButton = document.createElement("button");
-    nextButton.textContent = "Continue";
-    nextButton.onclick = function() { startStory(); };
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Continue";
+        nextButton.className = "choice-button";
+        nextButton.onclick = function() { startStory(); };
 
-    storyContainer.appendChild(document.createElement("br"));
-    storyContainer.appendChild(nextButton);
+        storyContainer.appendChild(document.createElement("br"));
+        storyContainer.appendChild(nextButton);
+
+        // Fade in
+        storyContainer.style.opacity = 1;
+    }, 500);
 }
