@@ -226,3 +226,114 @@ function playBackgroundMusic() {
     const backgroundMusic = document.getElementById("backgroundMusic");
     backgroundMusic.play();
 }
+function encounterWolf() {
+    currentStoryPoint = "encounterWolf";
+    const storyText = "You encounter a wolf blocking your path. It seems aggressive.";
+    document.body.className = "lost";
+
+    if (inventory.includes("Lantern")) {
+        updateStory(storyText, [
+            { text: "Use the lantern to scare the wolf away", action: () => { playSoundEffect('scare'); scareWolfWithLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }},
+            { text: "Climb a tree to escape", action: () => { playSoundEffect('climb'); climbTree(); }}
+        ]);
+    } else {
+        updateStory(storyText, [
+            { text: "Try to scare the wolf", action: () => { playSoundEffect('scare'); scareWolfWithoutLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }},
+            { text: "Climb a tree to escape", action: () => { playSoundEffect('climb'); climbTree(); }}
+        ]);
+    }
+}
+
+function climbTree() {
+    currentStoryPoint = "climbTree";
+    const storyText = "You quickly climb a nearby tree. The wolf circles below, but eventually loses interest and leaves.";
+    document.body.className = "sunrise";
+    updateStory(storyText, [
+        { text: "Climb down and continue", action: () => { playSoundEffect('descend'); encounterRiver(); }}
+    ]);
+}
+
+function encounterRiver() {
+    currentStoryPoint = "encounterRiver";
+    const storyText = "After escaping the wolf, you find yourself at the edge of a fast-moving river. The current looks strong.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Try to swim across", action: () => { playSoundEffect('swim'); swimAcross(); }},
+        { text: "Look for a bridge", action: () => { playSoundEffect('bridge'); findBridge(); }},
+        { text: "Follow the river downstream", action: () => { playSoundEffect('follow'); followRiver(); }}
+    ]);
+}
+
+function swimAcross() {
+    currentStoryPoint = "swimAcross";
+    const storyText = "You attempt to swim across the river, but the current is too strong. You struggle and eventually find yourself washed ashore, exhausted.";
+    document.body.className = "lost";
+    updateStory(storyText, [
+        { text: "Rest and recover", action: () => { playSoundEffect('rest'); recoverAndContinue(); }},
+        { text: "Search for shelter", action: () => { playSoundEffect('shelter'); findShelter(); }}
+    ]);
+}
+
+function findBridge() {
+    currentStoryPoint = "findBridge";
+    const storyText = "You walk along the riverbank and eventually find an old, rickety bridge. It looks dangerous, but it might be your only option.";
+    document.body.className = "dark-forest";
+    updateStory(storyText, [
+        { text: "Cross the bridge", action: () => { playSoundEffect('cross'); crossBridge(); }},
+        { text: "Turn back and find another way", action: () => { playSoundEffect('turnback'); turnBack(); }}
+    ]);
+}
+
+function followRiver() {
+    currentStoryPoint = "followRiver";
+    const storyText = "You decide to follow the river downstream. The path is difficult, but you hope it leads to safety.";
+    document.body.className = "lost";
+    updateStory(storyText, [
+        { text: "Keep following the river", action: () => { playSoundEffect('keepgoing'); keepFollowingRiver(); }},
+        { text: "Search for a way to cross", action: () => { playSoundEffect('search'); findCrossingPoint(); }}
+    ]);
+}
+
+function recoverAndContinue() {
+    currentStoryPoint = "recoverAndContinue";
+    const storyText = "After resting for a while, you feel strong enough to continue your journey. You gather your strength and move forward.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You survived and continued your adventure.");
+}
+
+function findShelter() {
+    currentStoryPoint = "findShelter";
+    const storyText = "You find a small cave nearby and decide to take shelter there. The night passes uneventfully, and you wake up ready to continue.";
+    document.body.className = "dark-forest";
+    endGame(storyText, "You found shelter and survived the night.");
+}
+
+function crossBridge() {
+    currentStoryPoint = "crossBridge";
+    const storyText = "You carefully cross the bridge. Despite its creaking and swaying, you make it to the other side safely.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You crossed the bridge and continued your journey.");
+}
+
+function turnBack() {
+    currentStoryPoint = "turnBack";
+    const storyText = "You decide the bridge is too dangerous and turn back. Unfortunately, you get lost in the dense forest.";
+    document.body.className = "lost";
+    endGame(storyText, "You got lost in the forest.");
+}
+
+function keepFollowingRiver() {
+    currentStoryPoint = "keepFollowingRiver";
+    const storyText = "You continue to follow the river, but the path gets harder and harder. You start to feel exhausted.";
+    document.body.className = "lost";
+    endGame(storyText, "You followed the river but couldn't find a way across.");
+}
+
+function findCrossingPoint() {
+    currentStoryPoint = "findCrossingPoint";
+    const storyText = "You search for a place where the river might be easier to cross. After a long search, you find a shallow area where you can cross safely.";
+    document.body.className = "sunrise";
+    endGame(storyText, "You successfully crossed the river and continued your journey.");
+}
