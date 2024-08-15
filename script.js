@@ -6,14 +6,19 @@ document.getElementById("nextButton").addEventListener("click", function() {
     playBackgroundMusic();
 });
 
+function playSoundEffect(effect) {
+    const audio = new Audio(`sounds/${effect}.mp3`);
+    audio.play();
+}
+
 function startStory() {
     inventory = []; // Reset inventory at the start of the game
     currentStoryPoint = "start";
     const storyText = "You find yourself in a dark forest. The trees tower above you, their leaves rustling in the wind. Ahead, you see a faint light flickering through the trees.";
     document.body.className = "dark-forest";
     updateStory(storyText, [
-        { text: "Investigate the light", action: investigateLight },
-        { text: "Stay where you are", action: stayWhereYouAre }
+        { text: "Investigate the light", action: () => { playSoundEffect('investigate'); investigateLight(); }},
+        { text: "Stay where you are", action: () => { playSoundEffect('stay'); stayWhereYouAre(); }}
     ]);
 }
 
@@ -23,8 +28,8 @@ function investigateLight() {
     const storyText = "You decide to investigate the light. As you approach, you realize it's coming from a lantern held by a mysterious figure.";
     document.body.className = "mysterious-figure";
     updateStory(storyText, [
-        { text: "Talk to the figure", action: talkToFigure },
-        { text: "Run away", action: runAway }
+        { text: "Talk to the figure", action: () => { playSoundEffect('talk'); talkToFigure(); }},
+        { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
     ]);
 }
 
@@ -33,7 +38,7 @@ function talkToFigure() {
     const storyText = "The figure is friendly and offers you guidance out of the forest.";
     document.body.className = "sunrise";
     updateStory(storyText, [
-        { text: "Continue", action: continueWithLantern }
+        { text: "Continue", action: () => { playSoundEffect('continue'); continueWithLantern(); }}
     ]);
 }
 
@@ -42,7 +47,7 @@ function continueWithLantern() {
     const storyText = "With the lantern lighting your way, you feel more confident as you continue through the forest.";
     document.body.className = "sunrise";
     updateStory(storyText, [
-        { text: "Move forward", action: encounterWolf }
+        { text: "Move forward", action: () => { playSoundEffect('move'); encounterWolf(); }}
     ]);
 }
 
@@ -53,13 +58,13 @@ function encounterWolf() {
     
     if (inventory.includes("Lantern")) {
         updateStory(storyText, [
-            { text: "Use the lantern to scare the wolf away", action: scareWolfWithLantern },
-            { text: "Run away", action: runAway }
+            { text: "Use the lantern to scare the wolf away", action: () => { playSoundEffect('scare'); scareWolfWithLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
         ]);
     } else {
         updateStory(storyText, [
-            { text: "Try to scare the wolf", action: scareWolfWithoutLantern },
-            { text: "Run away", action: runAway }
+            { text: "Try to scare the wolf", action: () => { playSoundEffect('scare'); scareWolfWithoutLantern(); }},
+            { text: "Run away", action: () => { playSoundEffect('run'); runAway(); }}
         ]);
     }
 }
@@ -88,8 +93,8 @@ function stayWhereYouAre() {
     const storyText = "You decide to stay where you are. The forest is eerily quiet, and you feel a chill run down your spine.";
     document.body.className = "dark-forest";
     updateStory(storyText, [
-        { text: "Wait and see", action: waitAndSee },
-        { text: "Shout for help", action: shoutForHelp }
+        { text: "Wait and see", action: () => { playSoundEffect('wait'); waitAndSee(); }},
+        { text: "Shout for help", action: () => { playSoundEffect('shout'); shoutForHelp(); }}
     ]);
 }
 
