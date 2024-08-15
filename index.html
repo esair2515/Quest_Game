@@ -4,20 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Story Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        #story {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .choice-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .choice-button:hover {
+            background-color: #0056b3;
+        }
+        .dark-forest {
+            background: url('dark-forest.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .mysterious-figure {
+            background: url('mysterious-figure.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .sunrise {
+            background: url('sunrise.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .lost {
+            background: url('lost.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        #backgroundMusic {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Interactive Story Game</h1>
-        <div id="story">
-            <!-- Story text will go here -->
-        </div>
-        <button id="nextButton">Start the Story</button>
-    </div>
-    <audio id="backgroundMusic" loop>
-        <source src="background-music.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+    <h1>Interactive Story Game</h1>
+    <div id="story"></div>
+    <button id="nextButton" class="choice-button">Start Game</button>
+    <audio id="backgroundMusic" src="background-music.mp3" loop></audio>
     <script src="script.js"></script>
 </body>
 </html>
